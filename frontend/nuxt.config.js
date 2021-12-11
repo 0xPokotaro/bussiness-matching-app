@@ -28,9 +28,11 @@ export default {
     CLIENT_SECRET: process.env.CLIENT_SECRET
   },
 
+  /*
   router: {
     middleware: ['auth']
   },
+  */
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
@@ -57,33 +59,22 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/auth-next',
     '@nuxtjs/proxy',
+    '@nuxtjs/i18n'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
-  auth: {
-    strategies: {
-      local: {
-        token: {
-          property: 'token',
-          global: true,
-          // required: true,
-          // type: 'Bearer'
-        },
-        user: {
-          property: 'user',
-          // autoFetch: true
-        },
-        endpoints: {
-          login: { url: 'http://localhost/oauth/token', method: 'post' },
-          logout: { url: '/api/auth/logout', method: 'post' },
-          user: { url: '/api/auth/user', method: 'get' }
-        }
-      }
-    }
+  i18n: {
+    locales: [
+      { code: 'en', name: 'English', iso: 'en-US', file: 'en-US.js' },
+      { code: 'ja', name: '日本語', iso: 'ja-JP', file: 'ja-JP.js' },
+      { code: 'zn', name: '简体中文', iso: 'zh_CN', file: 'zh_CN.js' }
+    ],
+    lazy: true,
+    langDir: 'i18n/',
+    defaultLocale: 'ja'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
