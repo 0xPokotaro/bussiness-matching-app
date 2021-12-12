@@ -24,5 +24,9 @@ module.exports = {
     password: {
       required: 'Password is required.'
     },
+  },
+
+  error: {
+    '001-01': 'Incorrect email address or password.'
   }
 }
