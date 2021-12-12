@@ -1,38 +1,58 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <v-card>
-        <v-form>
-        <v-card-title v-text="$t('page.login.title')" />
-          <v-card-text>
-            <v-text-field
-              v-model="username"
-              :error-messages="usernameErrors"
-              :label="$t('form.label.username')"
-              @input="$v.username.$touch()"
-              @blur="$v.username.$touch()"
-            />
-            <v-text-field
-              v-model="password"
-              :error-messages="passwordErrors"
-              :label="$t('form.label.password')"
-              @input="$v.password.$touch()"
-              @blur="$v.password.$touch()"
-            />
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              outlined
-              @click="login"
-            >
-              {{ $t('button.login') }}
-            </v-btn>
-          </v-card-actions>
-        </v-form>
-      </v-card>
-    </v-col>
-  </v-row>
+  <div>
+    <v-row justify="center" align="center">
+      <v-col cols="12" sm="8" md="6">
+        <v-card>
+          <v-form>
+          <v-card-title v-text="$t('page.login.title')" />
+            <v-card-text>
+              <v-text-field
+                v-model="username"
+                :error-messages="usernameErrors"
+                :label="$t('form.label.username')"
+                @input="$v.username.$touch()"
+                @blur="$v.username.$touch()"
+              />
+              <v-text-field
+                v-model="password"
+                :error-messages="passwordErrors"
+                :label="$t('form.label.password')"
+                @input="$v.password.$touch()"
+                @blur="$v.password.$touch()"
+              />
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                outlined
+                @click="login"
+              >
+                {{ $t('button.login') }}
+              </v-btn>
+            </v-card-actions>
+          </v-form>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-snackbar
+      v-model="snackbar"
+      timeout="2500"
+      absolute
+      outlined
+    >
+      {{ $t('error.001-01') }}
+      <template #action="{ attrs }">
+        <v-btn
+          color="pink"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+  </div>
 </template>
 
 <script>
@@ -44,6 +64,7 @@ export default {
   mixins: [validationMixin],
   layout: 'login',
   data: () => ({
+    snackbar: false,
     username: 'heller.ellen@example.net',
     password: 'password',
   }),
@@ -94,6 +115,7 @@ export default {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e)
+        this.snackbar = true
       }
     }
   }
