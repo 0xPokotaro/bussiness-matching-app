@@ -30,7 +30,7 @@ export default {
 
   /*
   router: {
-    middleware: ['auth']
+    middleware: ['authenticated']
   },
   */
 
@@ -53,6 +53,7 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/device',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

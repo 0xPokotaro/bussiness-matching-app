@@ -1,5 +1,17 @@
 module.exports = {
   page: {
+    like: {
+      title: 'Like'
+    },
+    search: {
+      title: 'Search'
+    },
+    chat: {
+      title: 'Talk'
+    },
+    maypage: {
+      title: 'Mypage'
+    },
     login: {
       title: 'Login'
     }

@@ -1,86 +1,50 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <v-app-bar
       :clipped-left="clipped"
       fixed
       app
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn
-        icon
-        @click.stop="miniVariant = !miniVariant"
-      >
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="clipped = !clipped"
-      >
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="fixed = !fixed"
-      >
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
+      <v-app-bar-nav-icon
+        v-if="!$device.isMobile"
+        @click.stop="drawer = !drawer"
+      />
       <v-toolbar-title v-text="title" />
-      <v-spacer />
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
         <Nuxt />
       </v-container>
     </v-main>
-    <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
+
+    <v-bottom-navigation
+      v-if="$device.isMobile"
+      v-model="bottomNav"
+      color="pink"
     >
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
+      <v-btn value="search">
+        <span>{{ $t('page.search.title') }}</span>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+
+      <v-btn value="like">
+        <span>{{ $t('page.like.title') }}</span>
+        <v-icon>mdi-heart-outline</v-icon>
+      </v-btn>
+
+      <v-btn value="chat">
+        <span>{{ $t('page.chat.title') }}</span>
+        <v-icon>mdi-chat-outline</v-icon>
+      </v-btn>
+
+      <v-btn value="mypage">
+        <span>{{ $t('page.mypage.title') }}</span>
+        <v-icon>mdi-account-circle-outline</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
+
     <v-footer
-      :absolute="!fixed"
+      v-if="!$device.isMobile"
       app
     >
       <span>&copy; {{ new Date().getFullYear() }}</span>
@@ -92,6 +56,7 @@
 export default {
   data () {
     return {
+      bottomNav: 'search',
       clipped: false,
       drawer: false,
       fixed: false,

@@ -63,6 +63,7 @@ export default {
   // auth: false,
   mixins: [validationMixin],
   layout: 'login',
+  middleware: false,
   data: () => ({
     snackbar: false,
     username: 'heller.ellen@example.net',
@@ -87,6 +88,11 @@ export default {
       return errors
     },
   },
+  mounted() {
+    if (this.$store.state.accessToken !== null) {
+      this.$router.push('/app')
+    }
+  },
   methods: {
     async login() {
       try {
@@ -103,12 +109,13 @@ export default {
         params.append('password', this.password)
 
         const uri = `${this.$config.API_URL}/oauth/token`
-        const data = await this.$axios.post(uri, params)
+        const res = await this.$axios.post(uri, params)
           .catch((error) => { return error.response })
 
-        if (data.status === 200) {
-          console.log('ログイン成功')
-          console.log(data)
+        if (res.status === 200) {
+          this.$store.dispatch('setAccessToken', res.data.access_token)
+          this.$store.dispatch('setRefleshToken', res.data.refresh_token)
+          this.$router.push('/app')
         } else {
           throw new Error('ログイン失敗')
         }

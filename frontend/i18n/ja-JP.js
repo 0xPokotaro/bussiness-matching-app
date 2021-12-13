@@ -1,5 +1,17 @@
 module.exports = {
   page: {
+    like: {
+      title: 'いいね'
+    },
+    search: {
+      title: 'さがす'
+    },
+    chat: {
+      title: 'トーク'
+    },
+    mypage: {
+      title: 'マイページ'
+    },
     login: {
       title: 'ログイン'
     }
