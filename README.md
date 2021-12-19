@@ -10,6 +10,10 @@
 ## Commands
 
 ```bash
+# セットアップ
+$ cp .env.example .env
+$ composer install
+
 # Bashエイリアスの設定
 alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
 
